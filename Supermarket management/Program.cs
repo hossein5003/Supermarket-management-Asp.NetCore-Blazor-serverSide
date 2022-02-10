@@ -5,6 +5,7 @@ using Supermarket_management.Data;
 using UseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +35,9 @@ builder.Services.AddTransient<ITransactionUseCase, TransactionUseCase>();
 
 
 var connectionString = builder.Configuration.GetConnectionString("DevConnection");
-builder.Services.AddDbContext<ApplicationContext>(option =>
+builder.Services.AddDbContext<Supermarket_managementContext>(options =>
+    options.UseSqlServer(connectionString));builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<Supermarket_managementContext>();builder.Services.AddDbContext<ApplicationContext>(option =>
     option.UseSqlServer(connectionString));
 
 var app = builder.Build();
@@ -52,7 +55,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
