@@ -1,0 +1,115 @@
+﻿@page "/transactions"
+@inject IProductUseCase productUseCase;
+@inject ITransactionUseCase transactionUseCase;
+@inject IJSRuntime JSRuntime;
+
+<div id="printArea">
+    <h3 class="mb-5">Transactions Report</h3>
+
+    <div class="row mb-5">
+        <div class="col-2">
+            <label for="cashierName">Cashier Name</label>
+            <input id="cashierName" type="text" class="form-control" @bind-value="cashierName" />
+        </div>
+        <div class="col-3">
+            <label for="startDate">Start Date</label>
+            <input id="startDate" type="date" class="form-control" @bind-value="startDate" />
+        </div>
+        <div class="col-3">
+            <label for="endDate">End Date</label>
+            <input id="endDate" type="date" class="form-control" @bind-value="endDate" />
+        </div>
+        <div class="col-2">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-primary form-control" @onclick="loadTransactios">Search</button>
+        </div>
+        <div class="col-2">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-primary form-control" @onclick="printReport">Print</button>
+        </div>
+    </div>
+
+
+    @if (transactions != null)
+    {
+
+        @if (transactions.Count() == 0)
+        {
+            <h4>No Transactions</h4>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date Time</th>
+                        <th>Cashier Name</th>
+                        <th>Product Name</th>
+                        <th>Quantity Before</th>
+                        <th>Quantity After</th>
+                        <th>Quantity Sold</th>
+                        <th>Gained Money</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var transaction in transactions)
+                    {
+                        <tr>
+                            <td>@transaction.timeStamp.ToString("yyyy/MM/dd hh:mm")</td>
+                            <td>@transaction.cashierName</td>
+                            <td>@getProductName(transaction)</td>
+                            <td>@transaction.beforeQuantity</td>
+                            <td>@(transaction.beforeQuantity-transaction.soldQuantity)</td>
+                            <td>@transaction.soldQuantity</td>
+                            <td>@(string.Format("{0:c}",transaction.price*transaction.soldQuantity,2))</td>
+                        </tr>
+                    }
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">&nbsp;</td>
+                        <td><b>Total Grand :</b></td>
+                        <td>
+                            <b>
+                                @string.Format("{0:c}",transactions.Sum(transaction=>transaction.price*transaction.soldQuantity),2)
+                            </b>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    }
+</div>
+@code {
+    private string cashierName;
+    private DateTime startDate;
+    private DateTime endDate;
+    private IEnumerable<Transaction> transactions;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        startDate = DateTime.Today;
+        endDate = DateTime.Today;
+    }
+
+
+    private string getProductName(Transaction transaction)
+    {
+        return productUseCase.GetProductById(transaction.ProductId).Name;
+    }
+
+    public void loadTransactios()
+    {
+        transactions = transactionUseCase.GetTransactionsByPeriodOfTime(cashierName, startDate, endDate);
+        StateHasChanged();
+    }
+
+    private void printReport()
+    {
+        JSRuntime.InvokeVoidAsync("print");
+    }
+}

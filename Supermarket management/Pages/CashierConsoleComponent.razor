@@ -1,0 +1,34 @@
+﻿@page "/cashier_console"
+@inject ISellProductUseCase sellProductUseCase;
+
+<h3>Cashier's Console</h3>
+
+<div class="row">
+    <div class="col-4">
+        <SelectProductForSellingComponent onProductSelected="selectProduct"/>
+        @if (selectedProduct != null)
+        {
+            <SelectProductComponent onProductSold="sellProduct" SelectedProduct="selectedProduct"/>
+        }
+    </div>
+    <div class="col">
+        <TodayTransactionComponent @ref="todayTransactionComponent"/>
+    </div>
+</div>
+
+
+@code {
+    public TodayTransactionComponent todayTransactionComponent;
+    private Product selectedProduct;
+
+    public void sellProduct(Product product)
+    {
+        sellProductUseCase.sellProduct("hossein cashier",product.ProductId, product.Quantity.Value);
+        todayTransactionComponent.loadTransactios("hossein cashier");
+    }
+
+    public void selectProduct(Product product)
+    {
+        selectedProduct = product;
+    }
+}

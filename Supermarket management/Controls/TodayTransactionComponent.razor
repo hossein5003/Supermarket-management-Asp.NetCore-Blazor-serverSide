@@ -1,0 +1,62 @@
+﻿@inject ITransactionUseCase transactionUseCase;
+@inject IProductUseCase productUseCase;
+
+<h3>Today Transactions</h3>
+
+@if (transactions.Count() == 0)
+{
+    <h5>No Transactions</h5>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cashier Name</th>
+                <th>Product Name</th>
+                <th>Date Time</th>
+                <th>Quantity Before</th>
+                <th>Quantity After</th>
+                <th>Quantity Sold</th>
+                <th>Gained Money</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var transaction in transactions)
+            {
+                <tr>
+                    <td>@transaction.cashierName</td>
+                    <td>@getProductName(transaction)</td>
+                    <td>@transaction.timeStamp.ToString("MM/dd hh:mm")</td>
+                    <td>@transaction.beforeQuantity</td>
+                    <td>@(transaction.beforeQuantity-transaction.soldQuantity)</td>
+                    <td>@transaction.soldQuantity</td>
+                    <td>@(string.Format("{0:c}",transaction.price*transaction.soldQuantity,2))</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Transaction> transactions;
+
+    private string getProductName(Transaction transaction)
+    {
+        return productUseCase.GetProductById(transaction.ProductId).Name;
+    }
+
+    public void loadTransactios(String cashierName)
+    {
+        transactions = transactionUseCase.GetTodayTransactions(cashierName);
+        StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        loadTransactios("hossein cashier");
+    }
+}
