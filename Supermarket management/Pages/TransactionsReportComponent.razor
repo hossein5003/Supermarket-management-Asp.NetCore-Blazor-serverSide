@@ -1,4 +1,7 @@
 ﻿@page "/transactions"
+
+@attribute [Authorize(policy:"AdminOnly")]
+
 @inject IProductUseCase productUseCase;
 @inject ITransactionUseCase transactionUseCase;
 @inject IJSRuntime JSRuntime;

@@ -1,5 +1,7 @@
 ﻿@page "/products/products"
 
+@attribute [Authorize(policy:"AdminOnly")]
+
 @inject IProductUseCase productUseCase;
 @inject ICategoryUseCase categoryUseCase;
 @inject NavigationManager navigationManager;

@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Supermarket_management.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
+    [IgnoreAntiforgeryToken]
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

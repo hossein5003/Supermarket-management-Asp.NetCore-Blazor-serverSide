@@ -40,6 +40,12 @@ builder.Services.AddDbContext<Supermarket_managementContext>(options =>
     .AddEntityFrameworkStores<Supermarket_managementContext>();builder.Services.AddDbContext<ApplicationContext>(option =>
     option.UseSqlServer(connectionString));
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", p => p.RequireClaim("Position","Admin"));
+    options.AddPolicy("CashierOnly", p => p.RequireClaim("Position","Cashier"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,7 +61,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

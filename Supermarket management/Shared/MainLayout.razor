@@ -2,18 +2,29 @@
 
 <PageTitle>Supermarket management</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+<header class="site-header sticky-top py-1">
+    <nav class="container d-flex flex-column flex-md-row justify-content-between">
+        <NavLink class="py-2 d-none d-md-inline-block" href="" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Home
+        </NavLink>
+        <NavLink class="py-2 d-none d-md-inline-block" href="cashier_console">
+            <span aria-hidden="true"></span> Sell
+        </NavLink>
+        <NavLink class="py-2 d-none d-md-inline-block" href="category">
+            <span aria-hidden="true"></span> Categories
+        </NavLink>
+        <NavLink class="py-2 d-none d-md-inline-block" href="products/products">
+            <span aria-hidden="true"></span> Products
+        </NavLink>
+        <NavLink class="py-2 d-none d-md-inline-block" href="transactions">
+            <span aria-hidden="true"></span> Reposts
+        </NavLink>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+        <Authentication />
+    </nav>
+</header>
+
+<main class="content px-4">
+    @Body
+</main>

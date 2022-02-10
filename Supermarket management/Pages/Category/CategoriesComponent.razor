@@ -1,4 +1,7 @@
 ﻿@page "/category";
+
+@attribute [Authorize(policy:"AdminOnly")]
+
 @inject ICategoryUseCase categoryUseCase;
 @inject NavigationManager navigationManager;
 

@@ -41,6 +41,9 @@ else
 }
 
 @code {
+    [Parameter]
+    public string cashierName{ get; set; }
+
     private IEnumerable<Transaction> transactions;
 
     private string getProductName(Transaction transaction)
@@ -57,6 +60,6 @@ else
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        loadTransactios("hossein cashier");
+        loadTransactios(cashierName);
     }
 }
