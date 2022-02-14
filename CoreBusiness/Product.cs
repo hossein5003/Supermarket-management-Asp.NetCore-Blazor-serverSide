@@ -9,9 +9,7 @@ namespace CoreBusiness
 {
     public class Product
     {
-        public int ProductId { get; set; }
-        [Required]
-        public int? categoryId { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -21,5 +19,8 @@ namespace CoreBusiness
 
         // ef core
         public Category Category { get; set; }
+        public int? CategoryId { get; set; }
+
+        public List<Transaction> Transactions { get; set; }
     }
 }

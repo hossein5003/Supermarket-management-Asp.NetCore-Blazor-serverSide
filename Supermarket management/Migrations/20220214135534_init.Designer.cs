@@ -12,8 +12,8 @@ using Supermarket_management.Data;
 namespace Supermarket_management.Migrations
 {
     [DbContext(typeof(Supermarket_managementContext))]
-    [Migration("20220210091557_addIdentity")]
-    partial class addIdentity
+    [Migration("20220214135534_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

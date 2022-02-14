@@ -44,10 +44,10 @@
         base.OnParametersSet();
         productToSell = new Product
             {
-                ProductId = SelectedProduct.ProductId,
+                Id = SelectedProduct.Id,
                 Quantity = 0,
                 Name = SelectedProduct.Name,
-                categoryId = SelectedProduct.categoryId,
+                CategoryId = SelectedProduct.CategoryId,
                 Price = SelectedProduct.Price
             };
     }
@@ -61,7 +61,7 @@
         }
 
 
-        var product = productUseCase.GetProductById(productToSell.ProductId);
+        var product = productUseCase.GetProductById(productToSell.Id);
         if (product.Quantity >= productToSell.Quantity)
         {
             errorMessage = string.Empty;

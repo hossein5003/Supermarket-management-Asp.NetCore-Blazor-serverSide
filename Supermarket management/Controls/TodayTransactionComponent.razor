@@ -27,7 +27,7 @@ else
             {
                 <tr>
                     <td>@transaction.cashierName</td>
-                    <td>@getProductName(transaction)</td>
+                    <td>@transaction.Product.Name</td>
                     <td>@transaction.timeStamp.ToString("MM/dd hh:mm")</td>
                     <td>@transaction.beforeQuantity</td>
                     <td>@(transaction.beforeQuantity-transaction.soldQuantity)</td>
@@ -46,20 +46,15 @@ else
 
     private IEnumerable<Transaction> transactions;
 
-    private string getProductName(Transaction transaction)
-    {
-        return productUseCase.GetProductById(transaction.ProductId).Name;
-    }
-
     public void loadTransactios(String cashierName)
     {
         transactions = transactionUseCase.GetTodayTransactions(cashierName);
         StateHasChanged();
     }
 
-    protected override void OnInitialized()
+    protected override Task OnParametersSetAsync()
     {
-        base.OnInitialized();
         loadTransactios(cashierName);
+        return base.OnParametersSetAsync();
     }
 }

@@ -35,11 +35,11 @@ namespace UseCases
             return _transactionRepository.GetTransactionsByPeriodOfTime(cashierName,start,end);
         }
 
-        public void saveTransaction(string cashierName, int productId, double price, int beforeQuantity, int soldQuantity)
+        public void saveTransaction(string cashierName, int Id, double price, int beforeQuantity, int soldQuantity)
         {
-            var product = _productUseCase.GetProductById(productId);
+            var product = _productUseCase.GetProductById(Id);
 
-            _transactionRepository.saveTransaction(cashierName, productId, product.Price.Value, beforeQuantity,soldQuantity);
+            _transactionRepository.saveTransaction(cashierName, Id, product.Price.Value, beforeQuantity,soldQuantity);
         }
     }
 }

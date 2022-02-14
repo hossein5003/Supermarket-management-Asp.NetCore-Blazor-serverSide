@@ -1,4 +1,5 @@
 ﻿using CoreBusiness;
+using Microsoft.EntityFrameworkCore;
 using Plugins.DataSore.SQL;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace Plugins.DateStore.SQL
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return _db.Products.ToList();
+            return _db.Products.Include(x=>x.Category).ToList();
         }
 
         public Product? GetProductById(int id)
@@ -44,19 +45,21 @@ namespace Plugins.DateStore.SQL
             return _db.Products.Find(id);
         }
 
-        public IEnumerable<Product> GetProductsBycategoryId(int categoryId)
+        public IEnumerable<Product> GetProductsById(int Id)
         {
-            return _db.Products.Where(product => product.categoryId == categoryId).ToList();
+            return _db.Products.Where(product => product.CategoryId == Id).Include(x=>x.Category).ToList();
         }
 
         public void UpdateProduct(Product product)
         {
-            var productFromDb = _db.Products.Find(product.ProductId);
+            var productFromDb = _db.Products.Find(product.Id);
 
             productFromDb.Name = product.Name;
             productFromDb.Price = product.Price;
             productFromDb.Quantity = product.Quantity;
-            productFromDb.categoryId = product.categoryId;
+            productFromDb.CategoryId = product.CategoryId;
+
+            _db.SaveChanges();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace UseCases.UseCaseInterfaces
     public interface ITransactionUseCase
     {
         public IEnumerable<Transaction> GetTodayTransactions(string cashierName);
-        public void saveTransaction(string cashierName, int productId, double price, int beforeQuantity, int soldQuantity);
+        public void saveTransaction(string cashierName, int Id, double price, int beforeQuantity, int soldQuantity);
         public IEnumerable<Transaction> GetAllTransactions(string cashierName);
         public IEnumerable<Transaction> GetTransactionsByPeriodOfTime(string cashierName, DateTime start, DateTime end);
     }

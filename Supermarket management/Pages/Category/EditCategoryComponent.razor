@@ -45,7 +45,7 @@
         Category orginalCategory = categoryUseCase.GetCategoryById(int.Parse(id));
         category.Name = orginalCategory.Name;
         category.Description = orginalCategory.Description;
-        category.categoryId = orginalCategory.categoryId;
+        category.Id = orginalCategory.Id;
     }
 
     private void OnValidSubmit()

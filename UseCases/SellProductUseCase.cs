@@ -18,9 +18,9 @@ namespace UseCases
             _transactionUseCase = transactionUseCase;
         }
 
-        public void sellProduct(string cashierName,int productId, int quantity)
+        public void sellProduct(string cashierName,int Id, int quantity)
         {
-            var product = _productRepository.GetProductById(productId);
+            var product = _productRepository.GetProductById(Id);
 
             if (product == null)
                 return;
@@ -28,7 +28,7 @@ namespace UseCases
             int beforeQuantity = product.Quantity.Value;
             product.Quantity -= quantity;
 
-            _transactionUseCase.saveTransaction(cashierName, productId,product.Price.Value,beforeQuantity, quantity);
+            _transactionUseCase.saveTransaction(cashierName, Id,product.Price.Value,beforeQuantity, quantity);
         }
     }
 }

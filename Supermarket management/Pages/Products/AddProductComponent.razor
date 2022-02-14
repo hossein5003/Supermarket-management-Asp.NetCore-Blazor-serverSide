@@ -19,13 +19,13 @@
             <InputText @bind-Value="product.Name" id="name" class="form-control"></InputText>
         </div>
         <div class="form-group mt-3 mb-3">
-            <label for="categoryId">Category</label>
-            <select class="form-control" @bind="product.categoryId" id="categoryId">
+            <label for="Id">Category</label>
+            <select class="form-control" @bind="product.CategoryId" id="Id">
                 <option selected></option>
 
                 @foreach (var category in categories)
                 {
-                    <option value="@category.categoryId">@category.Name</option>
+                    <option value="@category.Id">@category.Name</option>
                 }
 
             </select>

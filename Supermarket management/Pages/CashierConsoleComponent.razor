@@ -1,46 +1,49 @@
 ﻿@page "/cashier_console"
 
-@attribute [Authorize(policy:"CashierOnly")]
+@attribute [Authorize(policy: "CashierOnly")]
 
 @inject ISellProductUseCase sellProductUseCase;
 
-@if (string.IsNullOrWhiteSpace(cashierName))
+@if (!string.IsNullOrWhiteSpace(cashierName))
 {
     <h3>Cashier's Console</h3>
 
     <div class="row">
         <div class="col-4">
-            <SelectProductForSellingComponent onProductSelected="selectProduct"/>
+            <SelectProductForSellingComponent onProductSelected="selectProduct" />
             @if (selectedProduct != null)
             {
-                <SelectProductComponent onProductSold="sellProduct" SelectedProduct="selectedProduct"/>
+                <SelectProductComponent onProductSold="sellProduct" SelectedProduct="@selectedProduct" />
             }
         </div>
         <div class="col">
-            <TodayTransactionComponent cashierName="cashierName" @ref="todayTransactionComponent"/>
+
+            <TodayTransactionComponent CashierName="@cashierName" @ref="todayTransactionComponent" />
+
         </div>
     </div>
 }
 
 @code {
     [CascadingParameter]
-    private Task<AuthenticationState> _authState{ get; set; }
+    private Task<AuthenticationState> _authState { get; set; }
 
     private AuthenticationState authState;
 
+    public string cashierName;
     protected override async Task OnInitializedAsync()
     {
         authState = await _authState;
         cashierName = authState.User.Identity.Name;
     }
 
-    public string cashierName;
+
     public TodayTransactionComponent todayTransactionComponent;
     private Product selectedProduct;
 
     public void sellProduct(Product product)
     {
-        sellProductUseCase.sellProduct(cashierName,product.ProductId, product.Quantity.Value);
+        sellProductUseCase.sellProduct(cashierName, product.Id, product.Quantity.Value);
         todayTransactionComponent.loadTransactios(cashierName);
     }
 

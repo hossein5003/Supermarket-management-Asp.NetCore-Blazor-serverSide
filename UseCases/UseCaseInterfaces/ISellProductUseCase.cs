@@ -8,6 +8,6 @@ namespace UseCases.UseCaseInterfaces
 {
     public interface ISellProductUseCase
     {
-        public void sellProduct(string cashierName, int productId , int quantity);
+        public void sellProduct(string cashierName, int Id , int quantity);
     }
 }

@@ -61,7 +61,7 @@
                         <tr>
                             <td>@transaction.timeStamp.ToString("yyyy/MM/dd hh:mm")</td>
                             <td>@transaction.cashierName</td>
-                            <td>@getProductName(transaction)</td>
+                            <td>@transaction.Product.Name</td>
                             <td>@transaction.beforeQuantity</td>
                             <td>@(transaction.beforeQuantity-transaction.soldQuantity)</td>
                             <td>@transaction.soldQuantity</td>
@@ -97,12 +97,6 @@
 
         startDate = DateTime.Today;
         endDate = DateTime.Today;
-    }
-
-
-    private string getProductName(Transaction transaction)
-    {
-        return productUseCase.GetProductById(transaction.ProductId).Name;
     }
 
     public void loadTransactios()

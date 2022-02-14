@@ -1,4 +1,5 @@
 ﻿using CoreBusiness;
+using Microsoft.EntityFrameworkCore;
 using Plugins.DataSore.SQL;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Plugins.DateStore.SQL
 
         public IEnumerable<Category> GetAllCategories()
         {
-            return _db.Categories.ToList();
+            return _db.Categories.Include(x => x.Products).ToList();
         }
 
         public Category? GetCategoryById(int id)
@@ -44,7 +45,7 @@ namespace Plugins.DateStore.SQL
 
         public void UpdateCategory(Category category)
         {
-            var categoryFromDb = _db.Categories.Find(category.categoryId);
+            var categoryFromDb = _db.Categories.Find(category.Id);
 
             categoryFromDb.Name = category.Name;
             categoryFromDb.Description = category.Description;

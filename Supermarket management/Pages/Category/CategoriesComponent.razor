@@ -55,12 +55,12 @@
 
     private void EditHandle(Category category)
     {
-        navigationManager.NavigateTo($"/editCategory/{category.categoryId}");
+        navigationManager.NavigateTo($"/editCategory/{category.Id}");
     }
 
     private void DeleteHandle(Category category)
     {
-        categoryUseCase.DeleteCategory(category.categoryId);
+        categoryUseCase.DeleteCategory(category.Id);
         loadCategories();
     }
 

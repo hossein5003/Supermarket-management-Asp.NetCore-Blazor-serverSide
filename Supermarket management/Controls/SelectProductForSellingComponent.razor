@@ -2,13 +2,13 @@
 @inject IProductUseCase productUseCase;
 
 <div class="form-group mt-3 mb-3">
-    <label for="categoryId">Category</label>
-    <select class="form-control" @bind="SelectedcategoryId" id="categoryId">
+    <label for="category">Category</label>
+    <select class="form-control" @bind="SelectedCategoryId" id="category">
         <option selected></option>
 
         @foreach (var category in categories)
         {
-            <option value="@category.categoryId">@category.Name</option>
+            <option value="@category.Id">@category.Name</option>
         }
 
     </select>
@@ -26,7 +26,7 @@
 
             @foreach (var product in productsInCategory)
             {
-                <tr style=@(product.ProductId==selectedProductId?"background:beige; cursor:pointer;":"cursor:pointer")
+                <tr style=@(product.Id==selectedProductId?"background:beige; cursor:pointer;":"cursor:pointer")
                 @onclick="()=>handleOnSelectProduct(product)"
                 >
                     <td>@product.Name</td>
@@ -44,19 +44,19 @@
 
     private IEnumerable<Product> productsInCategory;
     private IEnumerable<Category> categories;
-    private int selectedcategoryId;
+    private int selectedCategoryId;
     private int selectedProductId;
 
-    private int SelectedcategoryId
+    private int SelectedCategoryId
     {
         get
         {
-            return selectedcategoryId;
+            return selectedCategoryId;
         }
         set
         {
-            selectedcategoryId = value;
-            productsInCategory = productUseCase.GetProductsBycategoryId(value);
+            selectedCategoryId = value;
+            productsInCategory = categoryUseCase.GetCategoryById(value).Products;
             onProductSelected.InvokeAsync(null);
             selectedProductId = 0;
         }
@@ -70,7 +70,7 @@
 
     private void handleOnSelectProduct(Product product)
     {
-        selectedProductId = product.ProductId;
+        selectedProductId = product.Id;
         onProductSelected.InvokeAsync(product);
     }
 }

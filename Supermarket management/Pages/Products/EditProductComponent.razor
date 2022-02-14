@@ -20,12 +20,18 @@
         </div>
         <div class="form-group mt-3 mb-3">
             <label for="category">Category</label>
-            <select class="form-control" @bind="product.categoryId">
-                <option value="@product.categoryId" selected>@categoryUseCase.GetCategoryById(product.categoryId.Value).Name</option>
-
+            <select class="form-control" @bind="product.CategoryId">
+                
                 @foreach (var category in categories)
                 {
-                    <option value="@category.categoryId">@category.Name</option>
+                    @if (category.Id == product.CategoryId)
+                    {
+                        <option value="@category.Id" selected>@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
                 }
 
             </select>
@@ -67,8 +73,8 @@
         base.OnParametersSet();
 
         originalProduct = productUseCase.GetProductById(int.Parse(id));
-        product.categoryId = originalProduct.categoryId;
-        product.ProductId = originalProduct.ProductId;
+        product.Id = originalProduct.Id;
+        product.CategoryId = originalProduct.CategoryId;
         product.Name = originalProduct.Name;
         product.Price = originalProduct.Price;
         product.Quantity = originalProduct.Quantity;

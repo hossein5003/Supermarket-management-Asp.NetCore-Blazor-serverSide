@@ -16,10 +16,10 @@ namespace Plugins.DataStore.InMemory
         {
             _products = new List<Product>()
             {
-                new Product() { ProductId = 1, categoryId = 1 , Name="Iced Tea",Quantity=100,Price=1.99},
-                new Product() { ProductId = 2, categoryId = 1 , Name="Canada Dry",Quantity=200,Price=1.99},
-                new Product() { ProductId = 3, categoryId = 2 , Name="Whole Wheat Bread",Quantity=300,Price=1.50},
-                new Product() { ProductId = 4, categoryId = 2 , Name="White Bread",Quantity=300,Price=1.50}
+                new Product() { Id = 1, CategoryId = 1 , Name="Iced Tea",Quantity=100,Price=1.99},
+                new Product() { Id = 2, CategoryId = 1 , Name="Canada Dry",Quantity=200,Price=1.99},
+                new Product() { Id = 3, CategoryId = 2 , Name="Whole Wheat Bread",Quantity=300,Price=1.50},
+                new Product() { Id = 4, CategoryId = 2 , Name="White Bread",Quantity=300,Price=1.50}
             };
         }
 
@@ -35,25 +35,25 @@ namespace Plugins.DataStore.InMemory
 
             int maxId = 0;
             if (_products.Count > 0)
-                maxId = _products.Max(item => item.ProductId);
+                maxId = _products.Max(item => item.Id);
 
-            product.ProductId = maxId + 1;
+            product.CategoryId = maxId + 1;
             _products.Add(product);
         }
 
         public Product? GetProductById(int id)
         {
-            return _products.FirstOrDefault(product => product.ProductId == id); 
+            return _products.FirstOrDefault(product => product.CategoryId == id); 
         }
 
         public void UpdateProduct(Product product)
         {
-            var productToUpdate = GetProductById(product.ProductId);
+            var productToUpdate = GetProductById(product.Id);
 
             if (productToUpdate != null)
             {
                 productToUpdate.Name = product.Name;
-                productToUpdate.categoryId = product.categoryId;              
+                productToUpdate.CategoryId = product.CategoryId;              
                 productToUpdate.Name = product.Name;
                 productToUpdate.Price = product.Price;
                 productToUpdate.Quantity = product.Quantity;
@@ -62,12 +62,12 @@ namespace Plugins.DataStore.InMemory
 
         public void DeleteProduct(int id)
         {
-            _products.Remove(_products.FirstOrDefault(product => product.ProductId == id));
+            _products.Remove(_products.FirstOrDefault(product => product.CategoryId == id));
         }
 
-        public IEnumerable<Product> GetProductsBycategoryId(int categoryId)
+        public IEnumerable<Product> GetProductsById(int Id)
         {
-            return _products.Where(product=>product.categoryId == categoryId);
+            return _products.Where(product=>product.CategoryId == Id);
         }
     }
 }

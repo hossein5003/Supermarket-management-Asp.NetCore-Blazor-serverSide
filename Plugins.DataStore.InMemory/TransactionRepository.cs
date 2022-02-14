@@ -36,16 +36,16 @@ namespace Plugins.DataStore.InMemory
             transaction.cashierName.Equals(cashierName, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        public void saveTransaction(string cashierName, int productId, double price, int beforeQuantity,int soldQuantity)
+        public void saveTransaction(string cashierName, int ProductId, double price, int beforeQuantity,int soldQuantity)
         {
             int maxId = 0;
             if (_transactions.Count > 0)
-                maxId = _transactions.Max(item => item.TransactionId);
+                maxId = _transactions.Max(item => item.Id);
 
             _transactions.Add(new Transaction()
             {
-                TransactionId = maxId + 1,
-                ProductId = productId,
+                Id = maxId + 1,
+                ProductId = ProductId,
                 price = price,
                 soldQuantity = soldQuantity,
                 beforeQuantity = beforeQuantity,

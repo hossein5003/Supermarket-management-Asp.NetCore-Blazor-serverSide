@@ -24,7 +24,7 @@
             @foreach (var product in products)
             {
                 <tr>
-                    <td>@categoryUseCase.GetCategoryById(product.categoryId.Value).Name</td>
+                    <td>@product.Category.Name</td>
                     <td>@product.Name</td>
                     <td>@Math.Round(@product.Price.Value,2)</td>
                     <td>@product.Quantity</td>
@@ -50,6 +50,8 @@
         loadProducts();
     }
 
+
+
     private void loadProducts()
     {
         products = productUseCase.GetAllProducts();
@@ -62,12 +64,12 @@
 
     private void EditHandle(Product product)
     {
-        navigationManager.NavigateTo($"/products/editProduct/{product.ProductId}");
+        navigationManager.NavigateTo($"/products/editProduct/{product.Id}");
     }
 
     private void DeleteHandle(Product product)
     {
-        productUseCase.DeleteProduct(product.ProductId);
+        productUseCase.DeleteProduct(product.Id);
         loadProducts();
     }
 }

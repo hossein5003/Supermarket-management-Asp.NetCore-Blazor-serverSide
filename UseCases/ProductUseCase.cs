@@ -43,9 +43,9 @@ namespace UseCases
             _productRepository.UpdateProduct(product);
         }
 
-        public IEnumerable<Product> GetProductsBycategoryId(int categoryId)
+        public IEnumerable<Product> GetProductsById(int Id)
         {
-            return _productRepository.GetProductsBycategoryId(categoryId);
+            return _productRepository.GetProductsById(Id);
         }
     }
 }
